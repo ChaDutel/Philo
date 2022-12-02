@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:43:11 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/02 21:50:39 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/02 23:27:37 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,20 @@ int	main(int argc, char **argv)
 	{
 		print_state(s_ph, JOIN);
 		s_ph.test_nb_philo += 1;
-		/* if (pthread_create(&philosophers[i], NULL, create_philo, &titou) != 0)
+		if (pthread_create(&philosophers[nb_philo], NULL, routine, &s_ph) != 0)
 			return (-1);
-		if (pthread_join(philosophers[i], NULL) != 0)
+		/*if (pthread_join(philosophers[i], NULL) != 0)
 			return (-1); */
 		nb_philo++;
 	}	
-	while (1)
+	nb_philo = 0;
+	while (nb_philo < s_ph.nb_philo)
 	{
-		if (pthread_create(&philosophers[i], NULL, do_smth, &s_ph) != 0)
+		/* if (pthread_create(&philosophers[i], NULL, do_smth, &s_ph) != 0)
+			return (-1); */
+		if (pthread_join(philosophers[nb_philo], NULL) != 0)
 			return (-1);
-		if (pthread_join(philosophers[i], NULL) != 0)
-			return (-1);
+		nb_philo++;
 	}
 	pthread_mutex_destroy(&(s_ph.mutex_write));
 	return (0);
