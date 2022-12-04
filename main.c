@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:12:19 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/03 17:29:49 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/04 12:16:08 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv)
 
 	if (parse(argc, argv) == -1)
 		return (0);
-	init(argv, &phi);
+	if (init(argc, argv, &phi) == -1)
+		return (0);
 	exec(phi);
 }

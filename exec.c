@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:43:11 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/03 17:30:12 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/04 13:52:18 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,32 @@ void	*eat(t_ph philo)
 void	*routine(void *phi)
 {
 	t_ph	philo;
+	int		i;
 
 	philo = *(t_ph *) phi;
 	usleep(250);
-	while (1)
+	print_state(philo, JOIN);
+	if (philo.philo % 2 == 0)
+		usleep(100);
+	i = 0;
+	if (philo.max_food_to_eat != -1)
 	{
-		eat(philo);
-		sleeping(philo);
-		think(philo);
+		while (i < philo.max_food_to_eat)
+		{
+			eat(philo);
+			sleeping(philo);
+			think(philo);
+			i++;
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			eat(philo);
+			sleeping(philo);
+			think(philo);
+		}
 	}
 	return (0);
 }
@@ -65,20 +83,28 @@ void	*routine(void *phi)
 int	exec(t_ph s_ph)
 {
 	pthread_t		*philosophers;
+	t_ph			*tab_philos;
 	int				i;
+	//bulter
 
 	i = 0;
-	s_ph.philo = 0;
+	s_ph.philo = 1;
 	philosophers = malloc(sizeof(pthread_t) * s_ph.nb_philo);
+	if (!philosophers)
+		return (-1);
+	tab_philos = malloc(sizeof(t_ph) * s_ph.nb_philo);
+	if (!tab_philos)
+		return (-1);
 	pthread_mutex_init(&(s_ph.mutex_write), NULL);
 	while (i < s_ph.nb_philo)
 	{
-		print_state(s_ph, JOIN);
-		s_ph.philo += 1;
-		if (pthread_create(&philosophers[i], NULL, routine, &s_ph) != 0)
+		tab_philos[i] = s_ph;
+		if (pthread_create(&philosophers[i], NULL, routine, &tab_philos[i]) != 0)
 			return (-1);
+		s_ph.philo += 1;
 		i++;
-	}	
+	}
+	//s_ph.philo -= 1;
 	i = 0;
 	while (i < s_ph.nb_philo)
 	{
