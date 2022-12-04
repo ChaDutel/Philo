@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:12:19 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/04 12:16:08 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/04 15:12:30 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 
 int	main(int argc, char **argv)
 {
-	t_ph	phi;
+	pthread_t		*philosophers;
+	t_ph			phi;
+	t_ph			*tab_philos;
 
 	if (parse(argc, argv) == -1)
 		return (0);
-	if (init(argc, argv, &phi) == -1)
+	if (init_struc_elms(argc, argv, &phi) == -1)
 		return (0);
-	exec(phi);
+	philosophers = malloc(sizeof(pthread_t) * phi.nb_philo);
+	if (!philosophers)
+		return (0);
+	tab_philos = malloc(sizeof(t_ph) * phi.nb_philo);
+	if (!tab_philos)
+		return (0);
+	exec(phi, philosophers, tab_philos);
 }
