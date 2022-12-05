@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:43:11 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/04 15:43:27 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:24:27 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	*routine(void *phi)
 {
 	t_ph	philo;
 	int		i;
+	//nvll struct mutex avec fct butler
 
 	philo = *(t_ph *) phi;
 	usleep(250);
@@ -48,6 +49,33 @@ void	*routine(void *phi)
 		execute_routine_with_limit_food(philo, i);
 	else
 		execute_routine(philo);
+	return (0);
+}
+
+int	exec(t_ph s_ph, pthread_t *philos, t_ph *tab_philos)
+{
+	int	i;
+
+	i = 0;
+	while (i < s_ph.nb_philo)
+	{
+		tab_philos[i] = s_ph;
+		if (pthread_create(&philos[i], NULL, routine, &tab_philos[i]) != 0)
+			return (-1);
+		s_ph.id += 1;
+		i++;
+	}
+	i = 0;
+	while (i < s_ph.nb_philo)
+	{
+		if (pthread_join(philos[i], NULL) != 0)
+			return (-1);
+		i++;
+	}
+	pthread_mutex_destroy(&(s_ph.mutex_write));
+	pthread_mutex_destroy(&(s_ph.butler->right_fork));
+	pthread_mutex_destroy(&(s_ph.butler->left_fork));
+	pthread_mutex_destroy(&(s_ph.butler->forks));
 	return (0);
 }
 
@@ -83,29 +111,3 @@ void	*routine(void *phi)
 	}
 	return (0);
 } */
-
-	//bulter
-int	exec(t_ph s_ph, pthread_t *philos, t_ph *tab_philos)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_init(&(s_ph.mutex_write), NULL);
-	while (i < s_ph.nb_philo)
-	{
-		tab_philos[i] = s_ph;
-		if (pthread_create(&philos[i], NULL, routine, &tab_philos[i]) != 0)
-			return (-1);
-		s_ph.id += 1;
-		i++;
-	}
-	i = 0;
-	while (i < s_ph.nb_philo)
-	{
-		if (pthread_join(philos[i], NULL) != 0)
-			return (-1);
-		i++;
-	}
-	pthread_mutex_destroy(&(s_ph.mutex_write));
-	return (0);
-}

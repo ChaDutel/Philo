@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/04 15:22:21 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:37:43 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,17 @@
 # define SLEEP 3
 # define THINK 4
 
-typedef struct ph
+typedef struct s_butler
+{
+	//sebastien
+	//int				fork;
+	int				nb_forks;
+	//pthread_mutex_t	right_fork;
+	//pthread_mutex_t	left_fork;
+	pthread_mutex_t	*forks;
+}	t_butler;
+
+typedef struct s_ph
 {
 	int				time_die;
 	int				time_eat;
@@ -32,7 +42,8 @@ typedef struct ph
 	int				nb_philo;
 	int				id;
 	pthread_mutex_t	mutex_write;
-}t_ph;
+	t_butler		*butler;
+}	t_ph;
 
 //////// PARSING ///////
 int		parse(int argc, char **argv);

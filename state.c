@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 15:15:39 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/04 15:21:23 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/05 20:01:30 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	sleeping(t_ph philo)
 
 void	eat(t_ph philo)
 {
+	pthread_mutex_lock(&(philo.butler->forks[philo.id]));
+	if ((philo.id - 1) < 0)
+		pthread_mutex_lock(&(philo.butler->forks[philo.nb_philo - 1]));
+	else
+		pthread_mutex_lock(&(philo.butler->forks[philo.id - 1]));
 	usleep(philo.time_eat);
 	print_state(philo, EAT);
 }
