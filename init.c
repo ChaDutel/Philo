@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:00:26 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/06 18:04:20 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:25:52 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,6 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * n);
-}
-
-void	init_time_begin(t_ph *s_ph)
-{
-	struct timeval	start;
-
-	gettimeofday(&start, NULL);
-	s_ph->time->ml_start = (start.tv_sec * 1000) + (start.tv_usec / 1000);
-	printf("\n\n%ld\n\n", s_ph->time->ml_start);
 }
 
 int	init_mutexs(t_ph *s_ph)

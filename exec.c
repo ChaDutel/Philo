@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:43:11 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/06 13:34:56 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:40:02 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	execute_routine(t_ph philo)
 	while (1)
 	{
 		eat(philo);
+		if (philo.butler->sebastien != 0)
+			return ;
 		sleeping(philo);
 		think(philo);
 	}
@@ -28,6 +30,8 @@ void	execute_routine_with_limit_food(t_ph philo, int i)
 	{
 		eat(philo);
 		//check if all philos are dead then break
+		if (philo.butler->sebastien != 0)
+			return ;
 		sleeping(philo);
 		think(philo);
 		i++;

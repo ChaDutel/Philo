@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/06 18:02:29 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:47:45 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,16 @@ typedef struct s_time
 {
 	//struct timeval	*start;
 	long				ml_start;
-	struct timeval	*first_or_previous_meal;
-	long				ml_first_o_pr_m;
-	struct timeval	*current_meal;
-	long				ml_c_m;
+	//struct timeval	*first_or_previous_meal;
+	long				first_o_pr_m;
+	//struct timeval	*current_meal;
+	long				current_m;
+	//long				t_between_meals;
 }	t_time;
 
 typedef struct s_butler
 {
-	//sebastien
+	int				sebastien;
 	int				nb_forks;
 	pthread_mutex_t	*forks;
 	//int			time_between_eat_and_die;
@@ -66,6 +67,11 @@ int		check_min_values(t_ph *s_phi);
 //////// INIT    ///////
 int		init_struc_elms(int argc, char **argv, t_ph *s_ph);
 int		ft_atoi(const char *str);
+
+//////// INIT TIME /////
+void	init_time_begin(t_ph *s_ph);
+void	time_last_meal(t_ph *s_ph);
+int		time_between_meal(t_ph *s_ph);
 
 //////// EXEC    ///////
 int		exec(t_ph s_ph, pthread_t *philos, t_ph *tab_philos);
