@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/06 16:34:40 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:55:20 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_ph
 	int				id;
 	pthread_mutex_t	mutex_write;
 	t_butler		*butler;
-	//t_time			*time;
+	t_time			*time;
 }	t_ph;
 
 //////// PARSING ///////
