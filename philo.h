@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/06 16:34:40 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:02:29 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 
 typedef struct s_time
 {
-	struct timeval	*start;
-	int				ml_start;
+	//struct timeval	*start;
+	long				ml_start;
 	struct timeval	*first_or_previous_meal;
-	int				ml_f_o_p_m;
+	long				ml_first_o_pr_m;
 	struct timeval	*current_meal;
-	int				ml_c_m;
+	long				ml_c_m;
 }	t_time;
 
 typedef struct s_butler
@@ -56,7 +56,7 @@ typedef struct s_ph
 	int				id;
 	pthread_mutex_t	mutex_write;
 	t_butler		*butler;
-	//t_time			*time;
+	t_time			*time;
 }	t_ph;
 
 //////// PARSING ///////

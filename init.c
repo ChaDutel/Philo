@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:00:26 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/06 16:42:34 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:04:20 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ int	ft_atoi(const char *str)
 	return (res * n);
 }
 
-/* void	init_time(t_ph *s_ph)
+void	init_time_begin(t_ph *s_ph)
 {
-	gettimeofday(s_ph->time->start, NULL);
-	s_ph->time->ml_start = (s_ph->time->start->tv_sec * 1000) + (s_ph->time->start->tv_usec * -1000);
-	printf("\n\n%d\n\n", s_ph->time->ml_start);
-} */
+	struct timeval	start;
+
+	gettimeofday(&start, NULL);
+	s_ph->time->ml_start = (start.tv_sec * 1000) + (start.tv_usec / 1000);
+	printf("\n\n%ld\n\n", s_ph->time->ml_start);
+}
 
 int	init_mutexs(t_ph *s_ph)
 {
@@ -50,7 +52,8 @@ int	init_mutexs(t_ph *s_ph)
 
 	i = 0;
 	pthread_mutex_init(&(s_ph->mutex_write), NULL);
-	s_ph->butler->forks = malloc(sizeof(pthread_mutex_t) * s_ph->butler->nb_forks);
+	s_ph->butler->forks = malloc(sizeof(pthread_mutex_t) \
+		* s_ph->butler->nb_forks);
 	if (!s_ph->butler->forks)
 		return (-1);
 	while (i < s_ph->butler->nb_forks)
@@ -59,9 +62,6 @@ int	init_mutexs(t_ph *s_ph)
 		i++;
 	}
 	return (0);
-	// s_ph->butler->fork = 1;//////////////////////////
-	// pthread_mutex_init(&(s_ph.butler->right_fork), NULL);
-	// pthread_mutex_init(&(s_ph.butler->left_fork), NULL);
 }
 
 int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
@@ -77,6 +77,6 @@ int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
 		s_ph->max_food_to_eat = ft_atoi(argv[5]);
 	if (init_mutexs(s_ph) == -1)
 		return (-1);
-	//init_time(s_ph);
+	init_time_begin(s_ph);
 	return (check_min_values(s_ph));
 }
