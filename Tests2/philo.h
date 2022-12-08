@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/08 16:05:10 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/08 11:10:16 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@
 typedef struct s_time
 {
 	//struct timeval	*start;
+	long				ml_start;
 	//struct timeval	*first_or_previous_meal;
+	long				first_o_pr_m;
 	//struct timeval	*current_meal;
+	long				current_m;
 	//long				t_between_meals;
 }	t_time;
 
@@ -37,7 +40,6 @@ typedef struct s_butler
 	int				sebastien;
 	int				nb_forks;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	mutex_write;
 	//int			time_between_eat_and_die;
 	//int			time_start
 	//int				fork;
@@ -53,12 +55,10 @@ typedef struct s_ph
 	int				max_food_to_eat;
 	int				nb_philo;
 	int				id;
-	//int				check_first_meal;
+	int				check_first_meal;
+	pthread_mutex_t	mutex_write;
 	t_butler		*butler;
 	t_time			*time;
-	long			ml_start;
-	long			first_o_pr_m;
-	long			current_m;
 }	t_ph;
 
 //////// PARSING ///////
@@ -75,12 +75,12 @@ void	time_last_meal(t_ph *s_ph);
 int		time_between_meal(t_ph *s_ph);
 
 //////// EXEC    ///////
-int		exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos);
+int		exec(t_ph s_ph, pthread_t *philos, t_ph *tab_philos);
 
 //////// STATE ///////
-void	eat(t_ph *philo);
-void	sleeping(t_ph *philo);
-void	think(t_ph *philo);
-void	print_state(t_ph *phi, int state);
+void	eat(t_ph philo);
+void	sleeping(t_ph philo);
+void	think(t_ph philo);
+void	print_state(t_ph phi, int state);
 
 #endif
