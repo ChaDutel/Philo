@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:00:26 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/08 16:02:56 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:57:17 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
 	if (init_mutexs(s_ph) == -1)
 		return (-1);
 	init_time_begin(s_ph);
-	s_ph->butler->sebastien = 0;
+	//s_ph->butler->sebastien = 0;
+	s_ph->stop = 0;
 	s_ph->first_o_pr_m = s_ph->ml_start;
 	//s_ph->check_first_meal = -1;
 	return (check_min_values(s_ph));

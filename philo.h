@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/08 16:05:10 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:56:14 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ typedef struct s_ph
 	int				max_food_to_eat;
 	int				nb_philo;
 	int				id;
-	//int				check_first_meal;
 	t_butler		*butler;
 	t_time			*time;
+	int				stop;
 	long			ml_start;
 	long			first_o_pr_m;
 	long			current_m;
