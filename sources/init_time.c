@@ -6,11 +6,11 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:25:15 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/08 17:18:36 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/10 11:04:57 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 int	time_between_meal(t_ph *s_ph)
 {

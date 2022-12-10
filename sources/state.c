@@ -6,16 +6,25 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 15:15:39 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/08 17:14:45 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/10 17:38:44 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	print_state(t_ph *phi, int state)
 {
 	pthread_mutex_lock(&(phi->butler->mutex_write));
-	if (state == JOIN)
+	if (state == DIE)
+	{
+		printf("Philosopher n'%d dies!\n", phi->id);
+		usleep(5000);
+		/* while (phi->butler->dead_sig < phi->nb_philo)
+		{
+			printf("bouh\n");
+		} */
+	}
+	else if (state == JOIN)
 		printf("Philosopher n'%d joins!\n", phi->id);
 	else if (state == EAT)
 		printf("Philosopher n'%d is eating\n", phi->id);
@@ -63,7 +72,7 @@ void	eat(t_ph *philo)
 		left_fork = philo->nb_philo - 1;
 	pthread_mutex_lock(&(philo->butler->forks[philo->id]));
 	pthread_mutex_lock(&(philo->butler->forks[left_fork]));
-	if (time_between_meal(philo) > philo->time_die)
+	/* if (time_between_meal(philo) > philo->time_die)
 	{
 		printf("philo n'%d diiiiiiiiiiiiiiiiiiiiie\n", philo->id);
 		//philo->butler->sebastien = 1;
@@ -71,7 +80,7 @@ void	eat(t_ph *philo)
 		pthread_mutex_unlock(&(philo->butler->forks[left_fork]));
 		pthread_mutex_unlock(&(philo->butler->forks[philo->id]));
 		return ;
-	}
+	} */
 	printf("%d\n", time_between_meal(philo));
 	printf("%d\n", philo->time_die);
 	usleep(philo->time_eat);

@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/08 16:56:14 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/10 17:21:47 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define EAT 2
 # define SLEEP 3
 # define THINK 4
+# define DIE 5
 
 typedef struct s_time
 {
@@ -38,6 +39,7 @@ typedef struct s_butler
 	int				nb_forks;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_write;
+	int				dead_sig;
 	//int			time_between_eat_and_die;
 	//int			time_start
 	//int				fork;
@@ -60,6 +62,11 @@ typedef struct s_ph
 	long			first_o_pr_m;
 	long			current_m;
 }	t_ph;
+
+/* typedef struct s_waiter
+{
+	t_ph	*ph;
+}	t_waiter; */
 
 //////// PARSING ///////
 int		parse(int argc, char **argv);
