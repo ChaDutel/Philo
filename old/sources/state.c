@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 15:15:39 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/11 12:56:43 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/11 12:49:21 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,23 @@ void	sleeping(t_ph *philo)
 	print_state(philo, SLEEP);
 }
 
+/* unsigned long get_time()
+{
+	return sec * 1000 + usce / 1000;
+}
+
+void	ft_usleep(t_ph *ph, unsigned int time_to_dead, unsigned int time)
+{
+	unsigned long futur;
+
+	futur = get_time() + time;
+	while (get_time() < futur)
+	{
+
+		usleep(500);
+	}
+} */
+
 void	eat(t_ph *philo)
 {
 	int	left_fork;
@@ -53,6 +70,15 @@ void	eat(t_ph *philo)
 		left_fork = philo->nb_philo - 1;
 	pthread_mutex_lock(&(philo->butler->forks[philo->id]));
 	pthread_mutex_lock(&(philo->butler->forks[left_fork]));
+	/* if (time_between_meal(philo) > philo->time_die)
+	{
+		printf("philo n'%d diiiiiiiiiiiiiiiiiiiiie\n", philo->id);
+		//philo->butler->sebastien = 1;
+		philo->stop = 1;
+		pthread_mutex_unlock(&(philo->butler->forks[left_fork]));
+		pthread_mutex_unlock(&(philo->butler->forks[philo->id]));
+		return ;
+	} */
 	// printf("%d\n", time_between_meal(philo));
 	// printf("%d\n", philo->time_die);
 	usleep(philo->time_eat);

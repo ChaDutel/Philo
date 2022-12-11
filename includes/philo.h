@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/10 17:21:47 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/11 13:24:43 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_ph
 	t_butler		*butler;
 	t_time			*time;
 	int				stop;
+	int				food;
 	long			ml_start;
 	long			first_o_pr_m;
 	long			current_m;
@@ -84,7 +85,11 @@ int		time_between_meal(t_ph *s_ph);
 //////// EXEC    ///////
 int		exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos);
 
-//////// STATE ///////
+//////// ROUTINE ///////
+void	*check_dead(void *phi);
+void	*routine(void *phi);
+
+//////// STATE  ///////
 void	eat(t_ph *philo);
 void	sleeping(t_ph *philo);
 void	think(t_ph *philo);
