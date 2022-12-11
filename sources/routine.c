@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 13:22:40 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/11 13:23:03 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/11 17:58:47 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	*routine(void *phi)
 	int		i;
 
 	philo = (t_ph *) phi;
-	usleep(250);
 	if (philo->id % 2 == 0)
 		usleep(100);
 	print_state(philo, JOIN);

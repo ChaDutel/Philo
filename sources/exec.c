@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:43:11 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/11 13:23:26 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/11 18:53:32 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ int	exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos)
 
 	i = 0;
 	butler = malloc(sizeof(pthread_t));
+	if (!butler)
+	{
+		free(s_ph->butler->forks);
+		free(philos);
+		free(tab_philos);
+		return (-1);//frre autres malloc
+	}
 	while (i < s_ph->nb_philo)
 	{
 		tab_philos[i] = *s_ph;

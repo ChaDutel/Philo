@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:12:19 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/10 11:05:08 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/11 18:53:09 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@ int	main(int argc, char **argv)
 		return (0);
 	philosophers = malloc(sizeof(pthread_t) * phi.nb_philo);
 	if (!philosophers)
+	{
+		free(phi.butler->forks);
 		return (0);
+	}
 	tab_philos = malloc(sizeof(t_ph) * phi.nb_philo);
 	if (!tab_philos)
+	{
+		free(phi.butler->forks);
+		free(philosophers);
 		return (0);
+	}
 	exec(&phi, philosophers, tab_philos);
 	free(philosophers);
 	free(tab_philos);

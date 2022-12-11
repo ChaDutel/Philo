@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:28:14 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/10 11:05:12 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/11 16:50:44 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_min_values(t_ph *s_ph)
 		return (0);
 }
 
-int	check_num(char **argv)
+int	check_num(char **argv) // check if nb is more max int
 {
 	int	i;
 	int	j;
