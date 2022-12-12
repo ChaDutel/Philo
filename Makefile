@@ -1,9 +1,9 @@
 NAME	:= philo
 
 CC	:= gcc
-CFLAGS	:=	-Wall -Wextra -Werror #$(CSAN)
+CFLAGS	:=	-Wall -Wextra -Werror $(CSAN)
 #CSAN	:=	-fsanitize=address -g3
-#CSAN	:=	-fsanitize=thread -g3
+CSAN	:=	-fsanitize=thread -g3
 
 DIR_SRCS	:=	sources
 DIR_INCS	:=	includes

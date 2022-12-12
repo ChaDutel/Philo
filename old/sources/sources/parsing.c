@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:28:14 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/12 18:00:16 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:14:00 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	check_min_values(t_ph *s_ph)
 	if (s_ph->nb_philo < 1 || s_ph->time_die < 60000 || s_ph->time_eat < 60000 \
 		|| s_ph->time_sleep < 60000)
 	{
+		/* else if (s_ph->nb_philo == 1)
+		{
+			write(2, "Philosopher n'1 dies, he ", 25);
+			write(2, "couldn't eat with one fork...\n", 30);
+		} */
 		if (s_ph->nb_philo < 1)
 			write(2, "Too few philosophers\n", 21);
 		else if (s_ph->time_die < 60000)
@@ -31,7 +36,7 @@ int	check_min_values(t_ph *s_ph)
 		return (0);
 }
 
-int	check_num(char **argv)
+int	check_num(char **argv) // check if nb is more max int
 {
 	int	i;
 	int	j;

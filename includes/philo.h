@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/11 18:20:49 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:51:05 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,6 @@ typedef struct s_butler
 	int				nb_forks;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_write;
-	int				dead_sig;
-	//int			time_between_eat_and_die;
-	//int			time_start
-	//int				fork;
-	//pthread_mutex_t	right_fork;
-	//pthread_mutex_t	left_fork;
 }	t_butler;
 
 typedef struct s_ph
@@ -58,7 +52,6 @@ typedef struct s_ph
 	int				id;
 	t_butler		*butler;
 	t_time			*time;
-	int				stop;
 	int				food;
 	long			ml_start;
 	long			first_o_pr_m;

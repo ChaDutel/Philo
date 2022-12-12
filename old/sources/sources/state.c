@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 15:15:39 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/12 17:59:45 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:59:18 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,3 +65,66 @@ void	eat(t_ph *philo)
 	pthread_mutex_unlock(&(philo->butler->forks[left_fork]));
 	pthread_mutex_unlock(&(philo->butler->forks[philo->id]));
 }
+
+/* void	eat(t_ph *philo)
+{
+	int	left_fork;
+
+	left_fork = philo->id - 1;
+	if (philo->id == 1)
+		left_fork = philo->nb_philo - 1;
+	if (philo->id == philo->nb_philo || philo->id == 1)
+	{
+		if (philo->butler->dead_sig % 2 == 0 && philo->id == philo->nb_philo)
+		{
+			pthread_mutex_lock(&(philo->butler->forks[philo->id]));
+			pthread_mutex_lock(&(philo->butler->forks[left_fork]));
+			//usleep(10);
+		}
+		else if (philo->butler->dead_sig % 2 != 0 && philo->id == 1)
+		{
+			pthread_mutex_lock(&(philo->butler->forks[philo->id]));
+			pthread_mutex_lock(&(philo->butler->forks[left_fork]));
+			//usleep(10);
+		}
+		philo->butler->dead_sig += 1;
+	}
+	else
+	{
+		pthread_mutex_lock(&(philo->butler->forks[philo->id]));
+		pthread_mutex_lock(&(philo->butler->forks[left_fork]));
+		// printf("%d\n", time_between_meal(philo));
+		// printf("%d\n", philo->time_die);
+	}
+	usleep(philo->time_eat);
+	print_state(philo, EAT);
+	time_last_meal(philo);
+	pthread_mutex_unlock(&(philo->butler->forks[left_fork]));
+	pthread_mutex_unlock(&(philo->butler->forks[philo->id]));
+} */
+
+/* void	eat(t_ph *philo)
+{
+	int	left_fork;
+
+	left_fork = philo->id - 1;
+	if (philo->id == 1)
+		left_fork = philo->nb_philo - 1;
+	if (philo->id == philo->nb_philo || philo->id == 1)
+	{
+		if (philo->butler->dead_sig % 2 == 0 && philo->id == philo->nb_philo)
+			usleep(10);
+		else if (philo->butler->dead_sig % 2 != 0 && philo->id == 1)
+			usleep(10);
+		philo->butler->dead_sig += 1;
+	}
+	pthread_mutex_lock(&(philo->butler->forks[philo->id]));
+	pthread_mutex_lock(&(philo->butler->forks[left_fork]));
+	// printf("%d\n", time_between_meal(philo));
+	// printf("%d\n", philo->time_die);
+	usleep(philo->time_eat);
+	print_state(philo, EAT);
+	time_last_meal(philo);
+	pthread_mutex_unlock(&(philo->butler->forks[left_fork]));
+	pthread_mutex_unlock(&(philo->butler->forks[philo->id]));
+} */

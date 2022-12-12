@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 13:22:40 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/12 18:00:51 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:58:19 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,3 +94,58 @@ void	*check_dead(void *phi)
 	}
 	return (0);
 }
+
+/* void	*check_dead(void *phi)
+{
+	t_ph	*philo;
+	int		i;
+
+	philo = phi;
+	if (philo[0].max_food_to_eat != -1)
+	{
+		while (1)
+		{
+			i = 0;
+			while (i < philo[0].nb_philo)
+			{
+				if (time_between_meal(&philo[i]) > philo[i].time_die)
+				{
+					if (philo[i].food == philo[i].max_food_to_eat)
+					{
+						philo[i].butler->sebastien = 1;
+						break ;
+					}
+					else
+					{
+						philo[i].butler->sebastien = 1;
+						print_state(philo, DIE);
+						break ;
+					}
+				}
+				i++;
+			}
+			if (philo[0].butler->sebastien != 0)
+				break ;
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			i = 0;
+			while (i < philo[0].nb_philo)
+			{
+				if (time_between_meal(&philo[i]) > philo[i].time_die)
+				{
+					philo[i].butler->sebastien = 1;
+					print_state(philo, DIE);
+					break ;
+				}
+				i++;
+			}
+			if (philo[0].butler->sebastien != 0)
+				break ;
+		}
+	}
+	return (0);
+} */
