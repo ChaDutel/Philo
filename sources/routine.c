@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 13:22:40 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/12 18:00:51 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:33:53 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void	execute_routine(t_ph *philo)
 		if (philo->butler->sebastien != 0)
 			return ;
 		eat(philo);
-		/* if (philo->butler->sebastien != 0)
-		{
-			philo->butler->dead_sig += 1;
-			break ;
-		} */
+		if (philo->butler->sebastien != 0)
+			return ;
 		sleeping(philo);
+		if (philo->butler->sebastien != 0)
+			return ;
 		think(philo);
 	}
 }
@@ -37,7 +36,11 @@ void	execute_routine_with_limit_food(t_ph *philo, int i)
 			return ;
 		eat(philo);
 		philo->food += 1;
+		if (philo->butler->sebastien != 0)
+			return ;
 		sleeping(philo);
+		if (philo->butler->sebastien != 0)
+			return ;
 		think(philo);
 		i++;
 	}

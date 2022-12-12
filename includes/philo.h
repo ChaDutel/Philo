@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/12 17:51:05 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/12 18:01:51 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@
 # define THINK 5
 # define DIE 6
 
-typedef struct s_time
-{
-	//struct timeval	*start;
-	//struct timeval	*first_or_previous_meal;
-	//struct timeval	*current_meal;
-	//long				t_between_meals;
-}	t_time;
-
 typedef struct s_butler
 {
 	int				sebastien;
@@ -51,17 +43,11 @@ typedef struct s_ph
 	int				nb_philo;
 	int				id;
 	t_butler		*butler;
-	t_time			*time;
 	int				food;
 	long			ml_start;
 	long			first_o_pr_m;
 	long			current_m;
 }	t_ph;
-
-/* typedef struct s_waiter
-{
-	t_ph	*ph;
-}	t_waiter; */
 
 //////// PARSING ///////
 int		parse(int argc, char **argv);
