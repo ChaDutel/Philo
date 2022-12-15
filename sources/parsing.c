@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:28:14 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/12 18:00:16 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:42:30 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,33 @@ int	check_min_values(t_ph *s_ph)
 		return (0);
 }
 
+int	atoi_parse(const char *str)
+{
+	unsigned int		i;
+	int					n;
+	unsigned long long	res;
+
+	i = 0;
+	n = 1;
+	res = 0;
+	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+			i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			n = n * (-1);
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	if (res > (unsigned long long)2147483647) //res < (long long)-2147483648 || 
+		return (-1);
+	return (res * n);
+}
+
 int	check_num(char **argv)
 {
 	int	i;
@@ -42,7 +69,7 @@ int	check_num(char **argv)
 		j = 0;
 		while (argv[i][j])
 		{
-			if ((argv[i][j] < '0' || argv[i][j] > '9') && argv[i][j] != '-')
+			if ((argv[i][j] < '0' || argv[i][j] > '9')) //&& argv[i][j] != '-')
 				return (-1);
 			j++;
 		}
@@ -53,6 +80,9 @@ int	check_num(char **argv)
 
 int	parse(int argc, char **argv)
 {
+	int	i;
+
+	i = 0;
 	if (argc != 5 && argc != 6)
 	{
 		write(2, "Wrong number of paramaters\n", 27);
@@ -62,6 +92,15 @@ int	parse(int argc, char **argv)
 	{
 		write(2, "Wrong parameters\n", 17);
 		return (-1);
+	}
+	while (argv[i])
+	{
+		if (atoi_parse(argv[i]) == -1)
+		{
+			write(2, "ERROR : int value require\n", 26);
+			return (-1);
+		}
+		i++;
 	}
 	return (0);
 }
