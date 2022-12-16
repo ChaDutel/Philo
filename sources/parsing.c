@@ -6,30 +6,11 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:28:14 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/14 18:42:30 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/15 19:48:45 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-int	check_min_values(t_ph *s_ph)
-{
-	if (s_ph->nb_philo < 1 || s_ph->time_die < 60000 || s_ph->time_eat < 60000 \
-		|| s_ph->time_sleep < 60000)
-	{
-		if (s_ph->nb_philo < 1)
-			write(2, "Too few philosophers\n", 21);
-		else if (s_ph->time_die < 60000)
-			write(2, "Time to die is too short\n", 25);
-		else if (s_ph->time_eat < 60000)
-			write(2, "Time to eat is too short\n", 25);
-		else if (s_ph->time_sleep < 60000)
-			write(2, "Time to sleep is too short\n", 27);
-		return (-1);
-	}
-	else
-		return (0);
-}
 
 int	atoi_parse(const char *str)
 {
@@ -58,6 +39,25 @@ int	atoi_parse(const char *str)
 	return (res * n);
 }
 
+int	check_min_values(t_ph *s_ph)
+{
+	if (s_ph->nb_philo < 1 || s_ph->time_die < 60000 || s_ph->time_eat < 60000 \
+		|| s_ph->time_sleep < 60000)
+	{
+		if (s_ph->nb_philo < 1)
+			write(2, "Too few philosophers\n", 21);
+		else if (s_ph->time_die < 60000)
+			write(2, "Time to die is too short\n", 25);
+		else if (s_ph->time_eat < 60000)
+			write(2, "Time to eat is too short\n", 25);
+		else if (s_ph->time_sleep < 60000)
+			write(2, "Time to sleep is too short\n", 27);
+		return (-1);
+	}
+	else
+		return (0);
+}
+
 int	check_num(char **argv)
 {
 	int	i;
@@ -69,7 +69,7 @@ int	check_num(char **argv)
 		j = 0;
 		while (argv[i][j])
 		{
-			if ((argv[i][j] < '0' || argv[i][j] > '9')) //&& argv[i][j] != '-')
+			if ((argv[i][j] < '0' || argv[i][j] > '9') && argv[i][j] != '-')
 				return (-1);
 			j++;
 		}
@@ -82,7 +82,6 @@ int	parse(int argc, char **argv)
 {
 	int	i;
 
-	i = 0;
 	if (argc != 5 && argc != 6)
 	{
 		write(2, "Wrong number of paramaters\n", 27);
@@ -93,6 +92,7 @@ int	parse(int argc, char **argv)
 		write(2, "Wrong parameters\n", 17);
 		return (-1);
 	}
+	i = 0;
 	while (argv[i])
 	{
 		if (atoi_parse(argv[i]) == -1)

@@ -6,11 +6,24 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:12:19 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/14 10:39:54 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/15 19:44:01 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/* void	ft_usleep(int time)
+{
+	int	i;
+
+	i = time / 2;
+	usleep(i);
+	while (i < time)
+	{
+		usleep(200);
+		i += 200;
+	}
+} */
 
 void	ft_free(t_ph phi, pthread_t *philos, t_ph *tab_philos)
 {

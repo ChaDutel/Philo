@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/15 16:44:31 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:16:39 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_butler
 
 typedef struct s_ph
 {
-	unsigned long long	time_die;
+	long long			time_die;
 	long long			time_eat;
 	long long			time_sleep;
 	int					max_food_to_eat;
@@ -46,8 +46,10 @@ typedef struct s_ph
 	int					id;
 	t_butler			*butler;
 	int					food;
-	unsigned long long	ml_start;
-	unsigned long long	last;
+	unsigned long long	start_time;
+	unsigned long long	last_meal;
+	int					right_hand;
+	int					left_hand;
 }	t_ph;
 
 //////// PARSING ///////
@@ -61,7 +63,8 @@ long long			ft_atoi(const char *str);
 //////// INIT TIME /////
 void				init_time_begin(t_ph *s_ph);
 void				time_last_meal(t_ph *s_ph);
-unsigned long long	get_time(void);
+//int					time_between_meal(t_ph *s_ph);
+long long			get_time(void);
 
 //////// EXEC    ///////
 int					exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos);

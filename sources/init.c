@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:00:26 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/15 16:46:22 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:10:55 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 long long	ft_atoi(const char *str)
 {
-	unsigned int		i;
-	int					n;
-	unsigned long long	res;
+	unsigned int	i;
+	int				n;
+	int				res;
 
 	i = 0;
 	n = 1;
@@ -43,8 +43,6 @@ int	init_mutexs(t_ph *s_ph)
 
 	i = 0;
 	pthread_mutex_init(&(s_ph->butler->mutex_write), NULL);
-	//pthread_mutex_init(&(s_ph->butler->check_dead), NULL);
-	//pthread_mutex_init(&(s_ph->butler->time_lock), NULL);
 	s_ph->butler->forks = malloc(sizeof(pthread_mutex_t) \
 		* s_ph->butler->nb_forks);
 	if (!s_ph->butler->forks)
@@ -59,8 +57,6 @@ int	init_mutexs(t_ph *s_ph)
 
 int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
 {
-	int	i;
-
 	s_ph->nb_philo = ft_atoi(argv[1]);
 	s_ph->butler->nb_forks = s_ph->nb_philo; //- 1;
 	s_ph->time_die = ft_atoi(argv[2]) * 1000;
@@ -75,19 +71,8 @@ int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
 		return (-1);
 	if (init_mutexs(s_ph) == -1)
 		return (-1);
-	init_time_begin(s_ph);
+	s_ph->start_time = get_time();
+	s_ph->last_meal = s_ph->start_time;
 	s_ph->butler->sebastien = 0;
-	s_ph->butler->tab_forks = malloc(sizeof(int) * s_ph->butler->nb_forks);
-	if (!s_ph->butler->tab_forks)
-	{
-		free(s_ph->butler->forks);
-		return (-1);
-	}
-	i = 0;
-	while (i < s_ph->butler->nb_forks)
-	{
-		s_ph->butler->tab_forks[i] = 1;
-		i++;
-	}
 	return (0);
 }
