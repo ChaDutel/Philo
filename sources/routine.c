@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 13:22:40 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/16 15:22:39 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:37:41 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,6 @@ void	*check_dead(void *phi)
 		i = 0;
 		while (i < philo[0].nb_philo)
 		{
-			/* printf("%lld get_timmmmmmme\n", get_time());
-			printf("%lld laaast\n", philo[i].last_meal);
-			printf("%lld get_time - last\n", (get_time() - philo[i].last_meal));
-			printf("%lld get_time - last * 1000\n", (get_time() - philo[i].last_meal) * 1000);
-			//printf("%d betweeen_meal\n", time_between_meal(&philo[i]));
-			printf("%lld time die\n", philo[i].time_die); */
-			//if ((get_time() - philo[i].last) > philo[i].time_die)
-			//if (time_between_meal(&philo[i]) > philo[i].time_die)
 			if (((get_time() - philo[i].last_meal) * 1000) > (unsigned long long)philo[i].time_die)
 			{
 				philo[i].butler->sebastien = 1;

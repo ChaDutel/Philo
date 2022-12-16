@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/16 16:16:39 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:57:53 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define TAKE_F 3
 # define SLEEP 4
 # define THINK 5
+# define RIGHT_HAND 6
+# define LEFT_HAND 7
 
 typedef struct s_butler
 {
