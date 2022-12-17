@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:00:26 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/16 17:08:12 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/17 23:13:13 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int	init_mutexs(t_ph *s_ph)
 
 	i = 0;
 	pthread_mutex_init(&(s_ph->butler->mutex_write), NULL);
+	pthread_mutex_init(&(s_ph->butler->time_lock), NULL);
+	pthread_mutex_init(&(s_ph->butler->food_lock), NULL);
+	pthread_mutex_init(&(s_ph->butler->check_dead), NULL);
+	// pthread_mutex_init(&(s_ph->butler->eat_all_meal), NULL);
 	s_ph->butler->forks = malloc(sizeof(pthread_mutex_t) \
 		* s_ph->butler->nb_forks);
 	if (!s_ph->butler->forks)
@@ -84,11 +88,11 @@ int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
 	s_ph->time_eat = ft_atoi(argv[3]) * 1000;
 	s_ph->time_sleep = ft_atoi(argv[4]) * 1000;
 	s_ph->id = 1;
-	s_ph->food = 0;
+	s_ph->nb_food_eaten = 0;
 	s_ph->max_food_to_eat = -1;
 	if (argc == 6)
 		s_ph->max_food_to_eat = ft_atoi(argv[5]);
-	if (check_min_values(s_ph) == -1)
+	if (check_min_values(s_ph, argc, argv) == -1)
 		return (-1);
 	if (init_mutexs(s_ph) == -1)
 		return (-1);

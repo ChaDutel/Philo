@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/16 16:57:53 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/17 23:13:04 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ typedef struct s_butler
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_write;
 	int				*tab_forks;
-	// pthread_mutex_t	time_lock;
-	// pthread_mutex_t	check_dead;
+	pthread_mutex_t	time_lock;
+	pthread_mutex_t	food_lock;
+	pthread_mutex_t	check_dead;
+	// pthread_mutex_t	eat_all_meal;
+	// int				eat_all_meal;
 }	t_butler;
 
 typedef struct s_ph
@@ -47,7 +50,7 @@ typedef struct s_ph
 	int					nb_philo;
 	int					id;
 	t_butler			*butler;
-	int					food;
+	int					nb_food_eaten;
 	unsigned long long	start_time;
 	unsigned long long	last_meal;
 	int					right_hand;
@@ -56,7 +59,7 @@ typedef struct s_ph
 
 //////// PARSING ///////
 int					parse(int argc, char **argv);
-int					check_min_values(t_ph *s_phi);
+int					check_min_values(t_ph *s_ph, int argc, char **argv);
 
 //////// INIT    ///////
 int					init_struc_elms(int argc, char **argv, t_ph *s_ph);
@@ -77,9 +80,10 @@ void				*check_dead(void *phi);
 void				*routine(void *phi);
 
 //////// STATE  ///////
-void				eat(t_ph *philo);
-void				sleeping(t_ph *philo);
-void				think(t_ph *philo);
-void				print_state(t_ph *phi, int state);
+int				eat(t_ph *philo);
+void			release_fork(t_ph *philo, int i, int hand, int fork);
+int				sleeping(t_ph *philo);
+int				think(t_ph *philo);
+int				print_state(t_ph *phi, int state);
 
 #endif

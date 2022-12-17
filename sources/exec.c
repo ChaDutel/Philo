@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:43:11 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/12 17:50:13 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/17 23:13:17 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ void	destroy_mutex(t_ph *s_ph)
 
 	i = 0;
 	pthread_mutex_destroy(&(s_ph->butler->mutex_write));
+	pthread_mutex_destroy(&(s_ph->butler->time_lock));
+	pthread_mutex_destroy(&(s_ph->butler->food_lock));
+	pthread_mutex_destroy(&(s_ph->butler->check_dead));
+	// pthread_mutex_destroy(&(s_ph->butler->eat_all_meal));
 	while (i < s_ph->butler->nb_forks)
 	{
 		pthread_mutex_destroy(&(s_ph->butler->forks[i]));
@@ -51,6 +55,7 @@ int	exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos)
 	if (!butler)
 	{
 		free(s_ph->butler->forks);
+		free(s_ph->butler->tab_forks);
 		free(philos);
 		free(tab_philos);
 		return (-1);

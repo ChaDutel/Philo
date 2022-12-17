@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:28:14 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/15 19:48:45 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/17 22:57:39 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	atoi_parse(const char *str)
 	return (res * n);
 }
 
-int	check_min_values(t_ph *s_ph)
+int	check_min_values(t_ph *s_ph, int argc, char **argv)
 {
 	if (s_ph->nb_philo < 1 || s_ph->time_die < 60000 || s_ph->time_eat < 60000 \
-		|| s_ph->time_sleep < 60000)
+		|| s_ph->time_sleep < 60000 || (argc == 6 && ft_atoi(argv[5]) < 1))
 	{
 		if (s_ph->nb_philo < 1)
 			write(2, "Too few philosophers\n", 21);
@@ -52,6 +52,8 @@ int	check_min_values(t_ph *s_ph)
 			write(2, "Time to eat is too short\n", 25);
 		else if (s_ph->time_sleep < 60000)
 			write(2, "Time to sleep is too short\n", 27);
+		else if (argc == 6 && ft_atoi(argv[5]) < 1)
+			write(2, "Too few meal to eat\n", 20);
 		return (-1);
 	}
 	else

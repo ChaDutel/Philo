@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:12:19 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/15 19:44:01 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/17 22:06:19 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,17 @@
 
 void	ft_free(t_ph phi, pthread_t *philos, t_ph *tab_philos)
 {
-	free(philos);
 	free(tab_philos);
 	free(phi.butler->forks);
+	free(phi.butler->tab_forks);
+	free(philos);
 }
+/* void	ft_free(t_ph phi, pthread_t *philos, t_ph *tab_philos)
+{
+	free(tab_philos);
+	free(phi.butler->forks);
+	free(philos);
+} */
 
 int	main(int argc, char **argv)
 {
@@ -48,12 +55,14 @@ int	main(int argc, char **argv)
 	if (!philosophers)
 	{
 		free(phi.butler->forks);
+		free(phi.butler->tab_forks);
 		return (0);
 	}
 	tab_philos = malloc(sizeof(t_ph) * phi.nb_philo);
 	if (!tab_philos)
 	{
 		free(phi.butler->forks);
+		free(phi.butler->tab_forks);
 		free(philosophers);
 		return (0);
 	}
