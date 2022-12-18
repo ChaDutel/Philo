@@ -6,7 +6,7 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 15:15:39 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 18:38:54 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/18 19:49:30 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ int	eat(t_ph *philo)
 	print_state(philo, TAKE_F);
 	take_fork(philo, LEFT_HAND, left_fork);
 	print_state(philo, TAKE_F);
-	print_state(philo, EAT);
 	pthread_mutex_lock(&(philo->butler->time_lock[philo->id - 1]));
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&(philo->butler->time_lock[philo->id - 1]));
+	print_state(philo, EAT);
 	ft_usleep(philo->time_eat);
 	release_fork(philo, philo->right_hand, RIGHT_HAND, right_fork);
 	release_fork(philo, philo->left_hand, LEFT_HAND, left_fork);
