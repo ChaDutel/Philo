@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 13:22:40 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 01:00:31 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 03:24:40 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,100 +34,19 @@ void	execute_routine(t_ph *philo)
 	while (1)
 	{
 		eat(philo);
+		if (philo->max_food_to_eat != -1)
+			philo->nb_food_eaten++;
+		if (philo->nb_food_eaten == philo->max_food_to_eat)
+		{
+			pthread_mutex_lock(&(philo->butler->lock_all_meal));
+			philo->butler->eat_all_meal++;
+			pthread_mutex_unlock(&(philo->butler->lock_all_meal));
+		}
 		if (sleeping(philo) == -1)
 			break ;
 		if (think(philo) == -1)
 			break ;
 	}
-	release_all_fork(philo);
-	printf("hello %d\n", philo->id);
-}
-
-/* void	execute_routine(t_ph *philo)
-{
-	while (1)
-	{
-		pthread_mutex_lock(&(philo->butler->check_dead));
-		if (philo->butler->sebastien != 0)
-		{
-			pthread_mutex_unlock(&(philo->butler->check_dead));
-			return ;
-		}
-		pthread_mutex_unlock(&(philo->butler->check_dead));
-		eat(philo);
-		pthread_mutex_lock(&(philo->butler->check_dead));
-		if (philo->butler->sebastien != 0)
-		{
-			pthread_mutex_unlock(&(philo->butler->check_dead));
-			return ;
-		}
-		pthread_mutex_unlock(&(philo->butler->check_dead));
-		sleeping(philo);
-		pthread_mutex_lock(&(philo->butler->check_dead));
-		if (philo->butler->sebastien != 0)
-		{
-			printf("%d\n", philo->id);
-			pthread_mutex_unlock(&(philo->butler->check_dead));
-			return ;
-		}
-		pthread_mutex_unlock(&(philo->butler->check_dead));
-		think(philo);
-	}
-} */
-
-/* void	execute_routine_with_limit_food(t_ph *philo, int i)
-{
-	while (i < philo->max_food_to_eat)
-	{
-		pthread_mutex_lock(&(philo->butler->check_dead));
-		if (philo->butler->sebastien != 0)
-		{
-			pthread_mutex_unlock(&(philo->butler->check_dead));
-			return ;
-		}
-		pthread_mutex_unlock(&(philo->butler->check_dead));
-		eat(philo);
-		// pthread_mutex_lock(&(philo->butler->food_lock));
-		philo->nb_food_eaten += 1;
-		// pthread_mutex_unlock(&(philo->butler->food_lock));
-		pthread_mutex_lock(&(philo->butler->check_dead));
-		if (philo->butler->sebastien != 0)
-		{
-			pthread_mutex_unlock(&(philo->butler->check_dead));
-			return ;
-		}
-		pthread_mutex_unlock(&(philo->butler->check_dead));
-		sleeping(philo);
-		pthread_mutex_lock(&(philo->butler->check_dead));
-		if (philo->butler->sebastien != 0)
-		{
-			pthread_mutex_unlock(&(philo->butler->check_dead));
-			return ;
-		}
-		pthread_mutex_unlock(&(philo->butler->check_dead));
-		think(philo);
-		i++;
-	}
-} */
-
-void	execute_routine_with_limit_food(t_ph *philo, int i)
-{
-	while (i < philo->max_food_to_eat)
-	{
-		eat(philo);
-		pthread_mutex_lock(&(philo->butler->food_lock));
-		philo->nb_food_eaten += 1;
-		// if (philo->nb_food_eaten == philo->max_food_to_eat)
-		// 	ger++;
-		pthread_mutex_unlock(&(philo->butler->food_lock));
-		if (sleeping(philo) == -1)
-			break ;
-		if (think(philo) == -1)
-			break ;
-		i++;
-	}
-	/*  += 1;
-	 execute_routine */
 	release_all_fork(philo);
 }
 
@@ -140,17 +59,12 @@ void	execute_routine_for_one(t_ph *philo)
 void	*routine(void *phi)
 {
 	t_ph	*philo;
-	int		i;
 
 	philo = (t_ph *) phi;
 	if (philo->id % 2 == 0)
 		usleep(500);
-	//print_state(philo, JOIN);
-	i = 0;
 	if (philo->nb_philo == 1)
 		execute_routine_for_one(philo);
-	else if (philo->max_food_to_eat != -1)
-		execute_routine_with_limit_food(philo, i);
 	else
 		execute_routine(philo);
 	return (0);
@@ -169,48 +83,30 @@ void	*check_dead(void *phi)
 		while (i < philo[0].nb_philo)
 		{
 			pthread_mutex_lock(&(philo->butler->time_lock[i]));
-			if (((get_time() - philo[i].last_meal) * 1000) > (unsigned long long)philo[i].time_die)
+			pthread_mutex_lock(&(philo->butler->lock_all_meal));
+			if (((get_time() - philo[i].last_meal) * 1000) > ((unsigned long long)philo[i].time_die) + 5000 || (philo->butler->eat_all_meal == philo->nb_philo))//////
 			{
 				pthread_mutex_unlock(&(philo->butler->time_lock[i]));
+				pthread_mutex_unlock(&(philo->butler->lock_all_meal));
 				pthread_mutex_lock(&(philo->butler->check_dead));
 				philo[i].butler->sebastien = 1;
 				pthread_mutex_unlock(&(philo->butler->check_dead));
-				pthread_mutex_lock(&(philo->butler->food_lock));
-				if (philo[i].nb_food_eaten != philo[i].max_food_to_eat) // <
+				pthread_mutex_lock(&(philo->butler->lock_all_meal));
+				if (philo->butler->eat_all_meal != philo->nb_philo)
 				{
-					
-					// printf("%d %d\n", philo[i].id, philo[i].nb_food_eaten);
 					if (print_state(&philo[i], DIE) == -1)
 					{
-						pthread_mutex_unlock(&(philo->butler->food_lock));
-						/* //usleep(2000000);
-						for (int j = 0; j < philo[i].butler->nb_forks; j++)
-							printf("Fork %d: %d\n", j, philo[i].butler->tab_forks[j]); */
+						pthread_mutex_unlock(&(philo->butler->lock_all_meal));
 						return (0);
 					}
 				}
-				pthread_mutex_unlock(&(philo->butler->food_lock));
-				//break ;
+				pthread_mutex_unlock(&(philo->butler->lock_all_meal));
 				return (0);
 			}
 			pthread_mutex_unlock(&(philo->butler->time_lock[i]));
+			pthread_mutex_unlock(&(philo->butler->lock_all_meal));
 			i++;
 		}
-		//i = 0;
-		/* if (philo[i].max_food_to_eat != -1)
-		{
-			while (i < philo[0].nb_philo && philo[i]->nb_food_eaten == philo[i].max_food_to_eat)
-			{
-				
-			}
-		} */
-		/* pthread_mutex_lock(&(philo->butler->check_dead));
-		if (philo[0].butler->sebastien != 0)
-		{
-			pthread_mutex_unlock(&(philo->butler->check_dead));
-			break ;
-		}
-		pthread_mutex_unlock(&(philo->butler->check_dead)); */
 	}
 	return (0);
 }

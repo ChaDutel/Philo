@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 00:59:24 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 03:17:07 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ typedef struct s_butler
 	pthread_mutex_t	mutex_write;
 	int				*tab_forks;
 	pthread_mutex_t	*time_lock;
-	pthread_mutex_t	food_lock;
 	pthread_mutex_t	check_dead;
-	// pthread_mutex_t	eat_all_meal;
-	// int				eat_all_meal;
+	pthread_mutex_t	lock_all_meal;
+	int				eat_all_meal;
 }	t_butler;
 
 typedef struct s_ph
@@ -58,26 +57,25 @@ typedef struct s_ph
 }	t_ph;
 
 //////// PARSING ///////
-int					parse(int argc, char **argv);
-int					check_min_values(t_ph *s_ph, int argc, char **argv);
+int				parse(int argc, char **argv);
+int				check_min_values(t_ph *s_ph, int argc, char **argv);
 
 //////// INIT    ///////
-int					init_struc_elms(int argc, char **argv, t_ph *s_ph);
-long long			ft_atoi(const char *str);
+int				init_struc_elms(int argc, char **argv, t_ph *s_ph);
+long long		ft_atoi(const char *str);
 
 //////// INIT TIME /////
-void				init_time_begin(t_ph *s_ph);
-void				time_last_meal(t_ph *s_ph);
-//int					time_between_meal(t_ph *s_ph);
-long long			get_time(void);
+void			init_time_begin(t_ph *s_ph);
+void			time_last_meal(t_ph *s_ph);
+long long		get_time(void);
 
 //////// EXEC    ///////
-int					exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos);
-void				ft_usleep(long long time);
+int				exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos);
+void			ft_usleep(long long time);
 
 //////// ROUTINE ///////
-void				*check_dead(void *phi);
-void				*routine(void *phi);
+void			*check_dead(void *phi);
+void			*routine(void *phi);
 
 //////// STATE  ///////
 int				eat(t_ph *philo);

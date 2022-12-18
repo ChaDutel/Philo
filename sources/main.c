@@ -6,24 +6,11 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:12:19 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 01:01:06 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 03:19:34 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-/* void	ft_usleep(int time)
-{
-	int	i;
-
-	i = time / 2;
-	usleep(i);
-	while (i < time)
-	{
-		usleep(200);
-		i += 200;
-	}
-} */
 
 void	ft_free(t_ph phi, pthread_t *philos, t_ph *tab_philos)
 {
@@ -33,12 +20,6 @@ void	ft_free(t_ph phi, pthread_t *philos, t_ph *tab_philos)
 	free(phi.butler->tab_forks);
 	free(philos);
 }
-/* void	ft_free(t_ph phi, pthread_t *philos, t_ph *tab_philos)
-{
-	free(tab_philos);
-	free(phi.butler->forks);
-	free(philos);
-} */
 
 int	main(int argc, char **argv)
 {

@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:28:14 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/17 22:57:39 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 03:19:16 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	atoi_parse(const char *str)
 		res = res * 10 + str[i] - '0';
 		i++;
 	}
-	if (res > (unsigned long long)2147483647) //res < (long long)-2147483648 || 
+	if (res > (unsigned long long)2147483647)
 		return (-1);
 	return (res * n);
 }

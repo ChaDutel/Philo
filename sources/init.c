@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:00:26 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 01:01:22 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 03:20:00 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ int	init_mutexs(t_ph *s_ph)
 
 	i = 0;
 	pthread_mutex_init(&(s_ph->butler->mutex_write), NULL);
-	// pthread_mutex_init(&(s_ph->butler->time_lock), NULL);
-	pthread_mutex_init(&(s_ph->butler->food_lock), NULL);
+	pthread_mutex_init(&(s_ph->butler->lock_all_meal), NULL);
 	pthread_mutex_init(&(s_ph->butler->check_dead), NULL);
-	// pthread_mutex_init(&(s_ph->butler->eat_all_meal), NULL);
 	s_ph->butler->forks = malloc(sizeof(pthread_mutex_t) \
 		* s_ph->butler->nb_forks);
 	if (!s_ph->butler->forks)
@@ -91,12 +89,13 @@ int	forks(t_ph *s_ph)
 int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
 {
 	s_ph->nb_philo = ft_atoi(argv[1]);
-	s_ph->butler->nb_forks = s_ph->nb_philo; //- 1;
+	s_ph->butler->nb_forks = s_ph->nb_philo;
 	s_ph->time_die = ft_atoi(argv[2]) * 1000;
 	s_ph->time_eat = ft_atoi(argv[3]) * 1000;
 	s_ph->time_sleep = ft_atoi(argv[4]) * 1000;
 	s_ph->id = 1;
 	s_ph->nb_food_eaten = 0;
+	s_ph->butler->eat_all_meal = 0;
 	s_ph->max_food_to_eat = -1;
 	if (argc == 6)
 		s_ph->max_food_to_eat = ft_atoi(argv[5]);
@@ -107,6 +106,6 @@ int	init_struc_elms(int argc, char **argv, t_ph *s_ph)
 	s_ph->start_time = get_time();
 	s_ph->last_meal = s_ph->start_time;
 	s_ph->butler->sebastien = 0;
-	forks(s_ph);///
+	forks(s_ph);
 	return (0);
 }
