@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:00:26 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/17 23:13:13 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:01:22 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	init_mutexs(t_ph *s_ph)
 
 	i = 0;
 	pthread_mutex_init(&(s_ph->butler->mutex_write), NULL);
-	pthread_mutex_init(&(s_ph->butler->time_lock), NULL);
+	// pthread_mutex_init(&(s_ph->butler->time_lock), NULL);
 	pthread_mutex_init(&(s_ph->butler->food_lock), NULL);
 	pthread_mutex_init(&(s_ph->butler->check_dead), NULL);
 	// pthread_mutex_init(&(s_ph->butler->eat_all_meal), NULL);
@@ -51,9 +51,16 @@ int	init_mutexs(t_ph *s_ph)
 		* s_ph->butler->nb_forks);
 	if (!s_ph->butler->forks)
 		return (-1);
+	s_ph->butler->time_lock = malloc(sizeof(pthread_mutex_t) * s_ph->butler->nb_forks);
+	if (!s_ph->butler->time_lock)
+	{
+		free(s_ph->butler->forks);
+		return (-1);
+	}
 	while (i < s_ph->butler->nb_forks)
 	{
 		pthread_mutex_init(&(s_ph->butler->forks[i]), NULL);
+		pthread_mutex_init(&(s_ph->butler->time_lock[i]), NULL);
 		i++;
 	}
 	return (0);
@@ -67,6 +74,7 @@ int	forks(t_ph *s_ph)
 	if (!s_ph->butler->tab_forks)
 	{
 		free(s_ph->butler->forks);
+		free(s_ph->butler->time_lock);
 		return (-1);
 	}
 	i = 0;

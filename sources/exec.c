@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:43:11 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/17 23:13:17 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:01:45 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ void	destroy_mutex(t_ph *s_ph)
 
 	i = 0;
 	pthread_mutex_destroy(&(s_ph->butler->mutex_write));
-	pthread_mutex_destroy(&(s_ph->butler->time_lock));
+	// pthread_mutex_destroy(&(s_ph->butler->time_lock));
 	pthread_mutex_destroy(&(s_ph->butler->food_lock));
 	pthread_mutex_destroy(&(s_ph->butler->check_dead));
 	// pthread_mutex_destroy(&(s_ph->butler->eat_all_meal));
 	while (i < s_ph->butler->nb_forks)
 	{
 		pthread_mutex_destroy(&(s_ph->butler->forks[i]));
+		pthread_mutex_destroy(&(s_ph->butler->time_lock[i]));
 		i++;
 	}
 }

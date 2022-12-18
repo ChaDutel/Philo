@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 13:22:40 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/17 23:13:28 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:00:31 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,10 +168,10 @@ void	*check_dead(void *phi)
 		i = 0;
 		while (i < philo[0].nb_philo)
 		{
-			pthread_mutex_lock(&(philo->butler->time_lock));
+			pthread_mutex_lock(&(philo->butler->time_lock[i]));
 			if (((get_time() - philo[i].last_meal) * 1000) > (unsigned long long)philo[i].time_die)
 			{
-				pthread_mutex_unlock(&(philo->butler->time_lock));
+				pthread_mutex_unlock(&(philo->butler->time_lock[i]));
 				pthread_mutex_lock(&(philo->butler->check_dead));
 				philo[i].butler->sebastien = 1;
 				pthread_mutex_unlock(&(philo->butler->check_dead));
@@ -193,10 +193,10 @@ void	*check_dead(void *phi)
 				//break ;
 				return (0);
 			}
-			pthread_mutex_unlock(&(philo->butler->time_lock));
+			pthread_mutex_unlock(&(philo->butler->time_lock[i]));
 			i++;
 		}
-		i = 0;
+		//i = 0;
 		/* if (philo[i].max_food_to_eat != -1)
 		{
 			while (i < philo[0].nb_philo && philo[i]->nb_food_eaten == philo[i].max_food_to_eat)
@@ -204,13 +204,13 @@ void	*check_dead(void *phi)
 				
 			}
 		} */
-		pthread_mutex_lock(&(philo->butler->check_dead));
+		/* pthread_mutex_lock(&(philo->butler->check_dead));
 		if (philo[0].butler->sebastien != 0)
 		{
 			pthread_mutex_unlock(&(philo->butler->check_dead));
 			break ;
 		}
-		pthread_mutex_unlock(&(philo->butler->check_dead));
+		pthread_mutex_unlock(&(philo->butler->check_dead)); */
 	}
 	return (0);
 }

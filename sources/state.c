@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 15:15:39 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/17 22:27:03 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 01:03:36 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	take_fork(t_ph *philo, int i, int hand, int fork)
 				philo->right_hand = 1;
 			else if (hand == LEFT_HAND)
 				philo->left_hand = 1;
-			print_state(philo, TAKE_F);
+			//print_state(philo, TAKE_F);
 			philo->butler->tab_forks[fork] = 0;
 		}
 		pthread_mutex_unlock(&(philo->butler->forks[fork]));
@@ -108,22 +108,22 @@ int	eat(t_ph *philo)
 		left_fork = philo->nb_philo - 1;
 	else
 		left_fork = philo->id - 2;
-	while (philo->right_hand != 1 && philo->left_hand != 1)
-	{
+	while (philo->right_hand != 1)
 		take_fork(philo, philo->right_hand, RIGHT_HAND, right_fork);
+	print_state(philo, TAKE_F);
+	while (philo->left_hand != 1)
 		take_fork(philo, philo->left_hand, LEFT_HAND, left_fork);
-	}
+	print_state(philo, TAKE_F);
 	print_state(philo, EAT);
 	// ft_usleep(philo->time_eat);
-	usleep(philo->time_eat);
-	pthread_mutex_lock(&(philo->butler->time_lock));
+	pthread_mutex_lock(&(philo->butler->time_lock[philo->id - 1]));
 	philo->last_meal = get_time();
-	pthread_mutex_unlock(&(philo->butler->time_lock));
-	while (philo->right_hand != 0 && philo->left_hand != 0)
-	{
+	pthread_mutex_unlock(&(philo->butler->time_lock[philo->id - 1]));
+	usleep(philo->time_eat);
+	while (philo->right_hand != 0)
 		release_fork(philo, philo->right_hand, RIGHT_HAND, right_fork);
+	while (philo->left_hand != 0)
 		release_fork(philo, philo->left_hand, LEFT_HAND, left_fork);
-	}
 	return (0);
 }
 

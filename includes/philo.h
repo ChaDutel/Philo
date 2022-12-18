@@ -6,7 +6,7 @@
 /*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/17 23:13:04 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 00:59:24 by charline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_butler
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_write;
 	int				*tab_forks;
-	pthread_mutex_t	time_lock;
+	pthread_mutex_t	*time_lock;
 	pthread_mutex_t	food_lock;
 	pthread_mutex_t	check_dead;
 	// pthread_mutex_t	eat_all_meal;
