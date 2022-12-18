@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 15:15:39 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 03:28:04 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 18:38:54 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static void	print_action(t_ph *phi, int state)
 int	print_state(t_ph *phi, int state)
 {
 	pthread_mutex_lock(&(phi->butler->mutex_write));
-	pthread_mutex_lock(&(phi->butler->check_dead));
 	if (state == DIE)
 		printf("%lld %d died\n", (get_time() - phi->start_time), phi->id);
+	pthread_mutex_lock(&(phi->butler->check_dead));
 	if (phi->butler->sebastien != 0)
 	{
 		pthread_mutex_unlock(&(phi->butler->check_dead));
 		pthread_mutex_unlock(&(phi->butler->mutex_write));
-		return (-1);	
+		return (-1);
 	}
 	else if (phi->butler->sebastien == 0)
 		print_action(phi, state);
@@ -58,45 +58,8 @@ int	sleeping(t_ph *philo)
 {
 	if (print_state(philo, SLEEP) == -1)
 		return (-1);
-	usleep(philo->time_sleep);
+	ft_usleep(philo->time_sleep);
 	return (0);
-}
-
-void	take_fork(t_ph *philo, int i, int hand, int fork)
-{
-	if (i == 1)
-		return ;
-	else
-	{
-		pthread_mutex_lock(&(philo->butler->forks[fork]));
-		if (philo->butler->tab_forks[fork] == 1)
-		{
-			if (hand == RIGHT_HAND)
-				philo->right_hand = 1;
-			else if (hand == LEFT_HAND)
-				philo->left_hand = 1;
-			philo->butler->tab_forks[fork] = 0;
-		}
-		pthread_mutex_unlock(&(philo->butler->forks[fork]));
-	}
-}
-void	release_fork(t_ph *philo, int i, int hand, int fork)
-{
-	if (i == 0)
-		return ;
-	else
-	{
-		pthread_mutex_lock(&(philo->butler->forks[fork]));
-		if (philo->butler->tab_forks[fork] == 0)
-		{
-			if (hand == RIGHT_HAND)
-				philo->right_hand = 0;
-			else if (hand == LEFT_HAND)
-				philo->left_hand = 0;
-			philo->butler->tab_forks[fork] = 1;
-		}
-		pthread_mutex_unlock(&(philo->butler->forks[fork]));
-	}
 }
 
 int	eat(t_ph *philo)
@@ -109,20 +72,16 @@ int	eat(t_ph *philo)
 		left_fork = philo->nb_philo - 1;
 	else
 		left_fork = philo->id - 2;
-	while (philo->right_hand != 1)
-		take_fork(philo, philo->right_hand, RIGHT_HAND, right_fork);
+	take_fork(philo, RIGHT_HAND, right_fork);
 	print_state(philo, TAKE_F);
-	while (philo->left_hand != 1)
-		take_fork(philo, philo->left_hand, LEFT_HAND, left_fork);
+	take_fork(philo, LEFT_HAND, left_fork);
 	print_state(philo, TAKE_F);
 	print_state(philo, EAT);
 	pthread_mutex_lock(&(philo->butler->time_lock[philo->id - 1]));
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&(philo->butler->time_lock[philo->id - 1]));
-	usleep(philo->time_eat);
-	while (philo->right_hand != 0)
-		release_fork(philo, philo->right_hand, RIGHT_HAND, right_fork);
-	while (philo->left_hand != 0)
-		release_fork(philo, philo->left_hand, LEFT_HAND, left_fork);
+	ft_usleep(philo->time_eat);
+	release_fork(philo, philo->right_hand, RIGHT_HAND, right_fork);
+	release_fork(philo, philo->left_hand, LEFT_HAND, left_fork);
 	return (0);
 }

@@ -9,7 +9,7 @@ DIR_SRCS	:=	sources
 DIR_INCS	:=	includes
 DIR_OBJS	:=	.objs
 
-LST_SRCS	:=	main.c parsing.c init.c init_time.c exec.c routine.c state.c
+LST_SRCS	:=	main.c parsing.c init.c utils.c exec.c routine.c state.c forks.c
 LST_INCS	:=	philo.h
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 

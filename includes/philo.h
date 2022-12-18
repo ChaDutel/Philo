@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:15:23 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 03:17:07 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 19:01:23 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,34 @@ typedef struct s_ph
 //////// PARSING ///////
 int				parse(int argc, char **argv);
 int				check_min_values(t_ph *s_ph, int argc, char **argv);
+int				check_max_values(t_ph *s_ph);
 
 //////// INIT    ///////
 int				init_struc_elms(int argc, char **argv, t_ph *s_ph);
 long long		ft_atoi(const char *str);
 
-//////// INIT TIME /////
-void			init_time_begin(t_ph *s_ph);
-void			time_last_meal(t_ph *s_ph);
-long long		get_time(void);
-
 //////// EXEC    ///////
 int				exec(t_ph *s_ph, pthread_t *philos, t_ph *tab_philos);
-void			ft_usleep(long long time);
 
 //////// ROUTINE ///////
 void			*check_dead(void *phi);
 void			*routine(void *phi);
 
-//////// STATE  ///////
+//////// STATE  ////////
 int				eat(t_ph *philo);
-void			release_fork(t_ph *philo, int i, int hand, int fork);
 int				sleeping(t_ph *philo);
 int				think(t_ph *philo);
 int				print_state(t_ph *phi, int state);
+
+//////// FORKS  ////////
+void			release_all_fork(t_ph *philo);
+// void			release_fork(t_ph *philo, int i, int fork);
+void			release_fork(t_ph *philo, int i, int hand, int fork);
+// void			take_fork(t_ph *philo, int fork);
+void			take_fork(t_ph *philo, int hand, int fork);
+
+//////// UTILS  ////////
+long long		get_time(void);
+void			ft_usleep(long long time);
 
 #endif

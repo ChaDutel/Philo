@@ -6,11 +6,25 @@
 /*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:25:15 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/16 15:42:16 by cdutel-l         ###   ########.fr       */
+/*   Updated: 2022/12/18 17:41:39 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	ft_usleep(long long time)
+{
+	long long	i;
+
+	time /= 1000;
+	i = get_time();
+	while (1)
+	{
+		if (get_time() - i >= time)
+			break ;
+		usleep(50);
+	}
+}
 
 long long	get_time(void)
 {

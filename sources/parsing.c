@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: charline <charline@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdutel-l <cdutel-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:28:14 by cdutel-l          #+#    #+#             */
-/*   Updated: 2022/12/18 03:19:16 by charline         ###   ########.fr       */
+/*   Updated: 2022/12/18 18:11:41 by cdutel-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ int	atoi_parse(const char *str)
 	if (res > (unsigned long long)2147483647)
 		return (-1);
 	return (res * n);
+}
+
+int	check_max_values(t_ph *s_ph)
+{
+	if (s_ph->time_eat > 10000000 || s_ph->time_sleep > 10000000 \
+	|| s_ph->nb_philo > 200)
+	{
+		if (s_ph->time_eat > 10000000)
+			write(2, "Time to eat is too big\n", 23);
+		else if (s_ph->time_sleep > 10000000)
+			write(2, "Time to sleep is too big\n", 25);
+		else if (s_ph->nb_philo > 200)
+			write(2, "Too much philosophers\n", 22);
+		return (-1);
+	}
+	else
+		return (0);
 }
 
 int	check_min_values(t_ph *s_ph, int argc, char **argv)
